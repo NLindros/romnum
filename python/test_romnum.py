@@ -30,11 +30,13 @@ test_data = [
     (450, "CDL"),
     (499, "CDXCIX"),
     (757, "DCCLVII"),
+    (2022, "MMXXII"),
+    (3749, "MMMDCCXLIX"),
 ]
 
 
 @pytest.mark.parametrize("data", test_data, ids=lambda x: f"{x[0]} -> {x[1]}")
-def test_numbers(data):
+def test_convert_to_roman_numbers(data):
     given, expected = data
     result = num2rom(given)
     assert result == expected
@@ -43,6 +45,7 @@ def test_numbers(data):
 @pytest.mark.parametrize(
     "number",
     [
+        (1, 1),
         (10, 1),
         (50, 10),
         (100, 10),
