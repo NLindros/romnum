@@ -1,4 +1,4 @@
-const { num2rom } = require('./app');
+const { num2rom, prevPowerOf10 } = require('./app');
 
 describe('Convert numbers to roman numbers', () => {
 
@@ -52,6 +52,7 @@ describe('Convert numbers to roman numbers', () => {
 
     it('should handle values around L (50)', () => {
         const numbers = new Map([
+            [49, 'XLIX'],
             [50, 'L'],
         ]);
         numbers.forEach((rom, num, map) => {
@@ -59,4 +60,40 @@ describe('Convert numbers to roman numbers', () => {
         });
     });
 
+    it('should handle values around C (100)', () => {
+        const numbers = new Map([
+            [92, 'XCII'],
+            [99, 'XCIX'],
+            [100, 'C'],
+            [109, 'CIX'],
+        ]);
+        numbers.forEach((rom, num, map) => {
+            expect(num2rom(num)).toBe(rom);
+        });
+    });
+
+    it('should handle all kind of random values', () => {
+        const numbers = new Map([
+            [34, 'XXXIV'],
+            [79, 'LXXIX'],
+            [149, 'CXLIX'],
+            [498, 'CDXCVIII'],
+        ]);
+        numbers.forEach((rom, num, map) => {
+            expect(num2rom(num)).toBe(rom);
+        });
+    });
+
+});
+
+describe('Find nearest power of 10 below', () => {
+    it('should 10^(x-1) for 10^x', () => {
+        expect(prevPowerOf10(10)).toBe(1);
+        expect(prevPowerOf10(100)).toBe(10);
+        expect(prevPowerOf10(1000)).toBe(100);
+    });
+    it('should find nearest below of between power of 10\'s', () => {
+        expect(prevPowerOf10(50)).toBe(10);
+        expect(prevPowerOf10(5)).toBe(1);
+    })
 });
